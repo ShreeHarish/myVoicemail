@@ -22,10 +22,11 @@ import android.view.KeyEvent;
 import java.io.File;
 import java.util.Date;
 
-
+/*
 class PhonecallReceiver extends BroadcastReceiver {
 
-    //The receiver will be recreated whenever android feels like it.  We need a static variable to remember data between instantiations
+    //The receiver will be recreated whenever android feels like it.  We need a static variable to remember data
+    // between instantiations
 
     private static int lastState = TelephonyManager.CALL_STATE_IDLE;
     private static Date callStartTime;
@@ -63,6 +64,8 @@ class PhonecallReceiver extends BroadcastReceiver {
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end){}
     protected void onOutgoingCallEnded(Context ctx, String number, Date start, Date end){}
     protected void onMissedCall(Context ctx, String number, Date start){}
+    protected void onIncomingCallReceived(Context ctx, String number, Date start){}
+    protected void onIncomingCallAnswered(Context ctx, String number, Date start){}
 
     //Deals with actual events
 
@@ -106,9 +109,9 @@ class PhonecallReceiver extends BroadcastReceiver {
     }
 }
 
+*/
 
-
-/*class AttendCalls extends BroadcastReceiver {
+class AttendCalls extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (!intent.getAction().equals(
@@ -128,7 +131,15 @@ class PhonecallReceiver extends BroadcastReceiver {
         return;
     }
 };
-*/
+
+
+class CallReceiver extends AttendCalls{
+
+
+    public void onReceive(){
+        //
+    }
+}
 public class MainActivity extends AppCompatActivity {
 
     String[] permissions = {"android.permission.ANSWER_PHONE_CALLS",
@@ -141,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             "android.permission.PROCESS_OUTGOING_CALLS"
     };
 
-    protected void onRetart() {
+    protected void onRestart() {
 
         super.onRestart();
         setContentView(R.layout.activity_main);
@@ -156,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recvPermissions();
 
-        PhonecallReceiver callAttender = new PhonecallReceiver();
+
 
 
     }
@@ -180,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private boolean hasPermissions(Context context, String... permissions) {s
+    private boolean hasPermissions(Context context, String... permissions) {
 
 
         if (context != null && permissions != null) {
