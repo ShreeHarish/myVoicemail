@@ -6,7 +6,7 @@ Work by Shree Harish.S and Srikanth.G.R
 Audiorec Package Instructions:
 
 1. Pull commits into your cloned repository on your computer. Then copy-paste the package in your project.
-2. It requires permissions to record audio. So include "android.permission.RECORD_AUDIO" in manifest and string[] permissions.
+2. It requires permissions to record audio. So include **"android.permission.RECORD_AUDIO"** in manifest and string[] permissions.
 3. To use its methods, import them like this at the top:  
 ```java
 import com.example.audiorec.RecordUtils.RecordButton;
