@@ -8,8 +8,11 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Button;
 import android.content.Context;
+
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
             "android.permission.READ_PHONE_STATE",
             "android.permission.RECORD_AUDIO",
             "android.permission.RECEIVE_BOOT_COMPLETED",
+            "android.permission.READ_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
     };
     Button recButton;
     Button playButton;
@@ -40,19 +45,14 @@ public class MainActivity extends AppCompatActivity {
         recvPermissions();
 
         //RECORD AUDIO
-        String filePath = getExternalCacheDir().getAbsolutePath();
-        filePath += "/audiorecordtest.mp3";
+        String filePath = RecordUtils.CreateFile(this,"audiorecordtest.mp3");
         String logTag = "Eat your food.";
-
-        MediaRecorder mr = new MediaRecorder();
-        MediaPlayer mp = new MediaPlayer();
 
         Button recButton = findViewById(R.id.recButton);
         Button playButton = findViewById(R.id.playButton);
 
-        RecordUtils.RecordButton RB = new RecordUtils.RecordButton(recButton, mr, filePath, logTag);
-        RecordUtils.PlayButton PB = new RecordUtils.PlayButton(playButton, mp, filePath, logTag);
-
+        RecordUtils.RecordButton RB = new RecordUtils.RecordButton(recButton, filePath, logTag);
+        RecordUtils.PlayButton PB = new RecordUtils.PlayButton(playButton, filePath, logTag);
 
     }
 
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
     private void closeApp(){
         finish();
     }
