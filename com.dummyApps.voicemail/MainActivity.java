@@ -1,18 +1,14 @@
 package com.example.myvoicemail;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.Button;
-import android.content.Context;
+import android.widget.ProgressBar;
 
-import java.io.File;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,8 +20,11 @@ public class MainActivity extends AppCompatActivity {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
     };
+
     Button recButton;
     Button playButton;
+    ProgressBar playProgress;
+
     protected void onRestart() {
 
         super.onRestart();
@@ -45,14 +44,18 @@ public class MainActivity extends AppCompatActivity {
         recvPermissions();
 
         //RECORD AUDIO
-        String filePath = RecordUtils.CreateFile(this,"audiorecordtest.mp3");
+        String folderPath = StorageUtils.createDirectory(this, Environment.DIRECTORY_DCIM, "voicemails");
+        String filePath = StorageUtils.GetFilePath(this, folderPath, "audiorecordtest.mp4");
         String logTag = "Eat your food.";
 
         Button recButton = findViewById(R.id.recButton);
         Button playButton = findViewById(R.id.playButton);
+        playProgress = findViewById(R.id.playProgress);
+
+        playProgress.setMax(10);
 
         RecordUtils.RecordButton RB = new RecordUtils.RecordButton(recButton, filePath, logTag);
-        RecordUtils.PlayButton PB = new RecordUtils.PlayButton(playButton, filePath, logTag);
+        RecordUtils.PlayButton PB = new RecordUtils.PlayButton(playButton, playProgress, filePath, logTag);
 
     }
 

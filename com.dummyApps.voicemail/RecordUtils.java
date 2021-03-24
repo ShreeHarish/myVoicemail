@@ -1,28 +1,17 @@
 package com.example.myvoicemail;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
+import android.animation.FloatArrayEvaluator;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Objects;
 
 public class RecordUtils{
 
@@ -119,27 +108,51 @@ public class RecordUtils{
         MediaPlayer p;
         String fp;
         String LT;
+        ProgressBar PB;
+        long duration;
 
         boolean mStartPlaying = true;
 
         View.OnClickListener clicker = v -> {
 
+            duration = getDuration(StorageUtils.GetFile(fp));
+
             if (mStartPlaying) {
                 p = new MediaPlayer();
                 b.setText("Stop playing");
+
+                CountDownTimer mCountdowntimer = new CountDownTimer(duration, 1000) {
+
+                    public void onTick(long millisUntilFinished) {
+                        int progress = (int) (millisUntilFinished/1000);
+                        b.setText(Long.toString(millisUntilFinished));
+                        PB.setProgress(PB.getMax() - progress);
+                    }
+
+                    public void onFinish() {
+                        onPlay(mStartPlaying, p, fp, LT);
+                        mStartPlaying = !mStartPlaying;
+                        b.setText("Start playing");
+                        PB.setProgress(0);
+                    }
+
+                }.start();
+
             } else {
                 b.setText("Start playing");
+                PB.setProgress(0);
             }
 
             onPlay(mStartPlaying, p, fp, LT);
             mStartPlaying = !mStartPlaying;
         };
 
-        public PlayButton(Button button, String filePath, String LOG_TAG) {
+        public PlayButton(Button button, ProgressBar playProgress, String filePath, String LOG_TAG) {
 
             b = button;
             fp = filePath;
             LT = LOG_TAG;
+            PB = playProgress;
 
             button.setText("Start playing");
 
@@ -147,27 +160,11 @@ public class RecordUtils{
         }
     }
 
-    public static String CreateFile(Context context, String fileName){
-
-        File folder = new File(context.getExternalFilesDir(Environment.DIRECTORY_MUSIC), "voicemails");
-
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        File test = new File(folder, "dummy.txt");
-
-        try {
-            FileOutputStream out = new FileOutputStream(test);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        String parents = folder.getAbsolutePath();
-
-        String path = parents + File.separator + fileName;
-
-        return path;
+    private static long getDuration(File file) {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(file.getAbsolutePath());
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Long.parseLong(durationStr);
     }
 }
 
