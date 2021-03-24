@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //RECORD AUDIO
         String filePath = getExternalCacheDir().getAbsolutePath();
-        filePath += "/audiorecordtest.3gp";
+        filePath += "/audiorecordtest.mp3";
         String logTag = "Eat your food.";
 
         MediaRecorder mr = new MediaRecorder();
