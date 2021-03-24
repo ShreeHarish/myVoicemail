@@ -11,3 +11,5 @@ TODO:
 
 #App crashes if we press play while there is no audio file, gotta fix that.
 
+#Make size of the elements device independent (overlaps on some devices)
+
