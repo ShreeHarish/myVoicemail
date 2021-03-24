@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     String[] permissions = {
             "android.permission.READ_PHONE_STATE",
             "android.permission.RECORD_AUDIO",
+            "android.permission.RECEIVE_BOOT_COMPLETED",
     };
     Button recButton;
     Button playButton;
@@ -57,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        
+
     }
     private void recvPermissions() {
         if (!hasPermissions(this, permissions)) requestPermissions(permissions, 200);
     }
-    
+
     private boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
