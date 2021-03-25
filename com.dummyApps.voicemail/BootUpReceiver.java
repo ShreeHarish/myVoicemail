@@ -1,8 +1,10 @@
-package com.example.myvoicemail;
+package com.dummyApps.myvoicemail;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.dummyApps.myvoicemail.MainActivity;
 
 public class BootUpReceiver extends BroadcastReceiver {
     @Override

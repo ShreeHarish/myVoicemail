@@ -1,6 +1,7 @@
-package com.example.myvoicemail;
+package com.dummyApps.myvoicemail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
             "android.permission.RECEIVE_BOOT_COMPLETED",
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.WAKE_LOCK",
+            "android.permission.DISABLE_KEYGUARD",
     };
 
     Button recButton;
@@ -50,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button recButton = findViewById(R.id.recButton);
         Button playButton = findViewById(R.id.playButton);
+
+
         playProgress = findViewById(R.id.playProgress);
 
         playProgress.setMax(10);
@@ -78,7 +84,5 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void closeApp(){
-        finish();
-    }
+
 }

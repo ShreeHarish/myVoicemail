@@ -1,4 +1,4 @@
-package com.example.myvoicemail;
+package com.dummyApps.myvoicemail;
 
 import android.content.Context;
 
