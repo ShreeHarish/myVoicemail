@@ -1,0 +1,19 @@
+*Paste the folder i created in the directory i mentioned in readme file <---|
+									    |
+* The txt file I sent u has line number. Remove it( use a java code)	    |
+									    |
+*Replace it with the logger.java file in that directory --------------------|
+
+*Resolve if any other classes or functions are not found.
+
+*Build and test program.
+
+*In manifest file change name = .CallReceiver to .AcceptCallActivity(name of this class). I donno if this is mandatory. try with and w/o doing this.
+
+*If this works try to combine Call Receiver with this.
+
+*If not, the concept is to make the interrupt due to headphone button to happen while ringing to attend the call
+
+*I saw this happening in that class so u gotta understand and do that in Call receiver class in ringing part.
+
+*If u make this work, then u literally saved my ass. Thanks a lot!
