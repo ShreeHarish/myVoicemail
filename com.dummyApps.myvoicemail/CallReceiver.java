@@ -3,6 +3,7 @@ package com.dummyApps.myvoicemail;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 import java.io.*;
 
@@ -24,10 +25,8 @@ public class CallReceiver extends BroadcastReceiver {
         }
         else if(intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_RINGING)){
             showText(context, "Call ringing da");
-            Intent i = new Intent(context, AcceptCallActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            context.startActivity(intent);
+
+
         }
     }
 

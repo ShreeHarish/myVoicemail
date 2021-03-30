@@ -1,4 +1,4 @@
-package com.example.myvoicemail;
+package com.dummyApps.myvoicemail;
 
 import android.animation.FloatArrayEvaluator;
 import android.media.MediaMetadataRetriever;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -167,6 +169,3 @@ public class RecordUtils{
         return Long.parseLong(durationStr);
     }
 }
-
-
-
