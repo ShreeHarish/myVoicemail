@@ -1,6 +1,8 @@
 package com.dummyApps.myvoicemail;
 
-import android.animation.FloatArrayEvaluator;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -9,8 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,41 +72,74 @@ public class RecordUtils{
 
     public static class RecordButton{
 
-        Button b;
+        public Button b;
         MediaRecorder rec;
         String fp;
         String LT;
+        Context context;
+        DialogInterface.OnClickListener dialogClickListener;
+        AlertDialog.Builder builder;
 
         boolean mStartRecording = true;
 
         View.OnClickListener clicker = v -> {
 
-            if (mStartRecording) {
-                rec = new MediaRecorder();
-                b.setText("Stop recording");
-            } else {
-                b.setText("Start recording");
-            }
+            builder = new AlertDialog.Builder(context);
+            builder.setMessage("Overwrite - Dai u sure?").setPositiveButton("Yeah okay", dialogClickListener)
+                    .setNegativeButton("Noooo", dialogClickListener);
 
-            onRecord(mStartRecording, rec, fp, LT);
-            mStartRecording = !mStartRecording;
+            if(mStartRecording){
+                builder.show();
+            }
+            else{
+                b.setText("Start recording");
+                onRecord(false, rec, fp, LT);
+                mStartRecording = true;
+            }
         };
 
-        public RecordButton(Button button, String filePath, String LOG_TAG) {
+        public RecordButton(Button button, String filePath, String LOG_TAG, Context c) {
 
             b = button;
             fp = filePath;
             LT = LOG_TAG;
+            context = c;
 
             b.setText("Start recording");
 
             b.setOnClickListener(clicker);
+
+            dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+
+                            rec = new MediaRecorder();
+                            b.setText("Stop recording");
+                            onRecord(true, rec, fp, LT);
+                            mStartRecording = false;
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+
+                            b.setText("Start recording");
+                            mStartRecording = true;
+
+                            break;
+                    }
+                }
+            };
+
         }
     }
 
     public static class PlayButton {
 
-        Button b;
+        public Button b;
         MediaPlayer p;
         String fp;
         String LT;

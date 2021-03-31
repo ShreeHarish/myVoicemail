@@ -2,7 +2,6 @@
 package com.dummyApps.myvoicemail;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -91,12 +90,10 @@ public class MainActivity extends AppCompatActivity {
         Button recButton = findViewById(R.id.recButton);
         Button playButton = findViewById(R.id.playButton);
 
-
         playProgress = findViewById(R.id.playProgress);
-
         playProgress.setMax(10);
 
-        RecordUtils.RecordButton RB = new RecordUtils.RecordButton(recButton, filePath, logTag);
+        RecordUtils.RecordButton RB = new RecordUtils.RecordButton(recButton, filePath, logTag, this);
         RecordUtils.PlayButton PB = new RecordUtils.PlayButton(playButton, playProgress, filePath, logTag);
 
     }
